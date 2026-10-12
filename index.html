@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Punctuation practice for grades 1 to 8, using Canadian conventions.">
+<style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Punctuation Activation</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fredoka:wght@500;600&display=swap">
+<style>
+/* Layout: a composition notebook. Index tabs pick the grade, skills sit on ruled lines,
+   and every practice sentence is written on a ruled sheet with a red margin. */
+:root{
+  --desk:#edf1f9; --paper:#fbfcff; --card:#ffffff;
+  --ink:#1b2440; --ink-soft:#55607f;
+  --rule:#cddaf2; --line:#d6deee; --margin:#e4576e;
+  --accent:#2c56cf; --on-accent:#ffffff;
+  --hi:#ffe262; --hi-ink:#1b2440;
+  --ok:#147a52; --ok-bg:#dcf4e8; --bad:#bf2f4a; --bad-bg:#fde3e8;
+  --display:"Fredoka","Trebuchet MS",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",Verdana,system-ui,sans-serif;
+  --sent:22px; --row:56px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --desk:#0f131e; --paper:#171d2d; --card:#1c2336;
+    --ink:#e9edf8; --ink-soft:#9ca7c6;
+    --rule:#2a3555; --line:#2c3654; --margin:#b9485f;
+    --accent:#93acff; --on-accent:#0f1424;
+    --hi:#ecca3c; --hi-ink:#1b2033;
+    --ok:#62d6a3; --ok-bg:#13352a; --bad:#ff93a6; --bad-bg:#3c1a24;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --desk:#0f131e; --paper:#171d2d; --card:#1c2336;
+  --ink:#e9edf8; --ink-soft:#9ca7c6;
+  --rule:#2a3555; --line:#2c3654; --margin:#b9485f;
+  --accent:#93acff; --on-accent:#0f1424;
+  --hi:#ecca3c; --hi-ink:#1b2033;
+  --ok:#62d6a3; --ok-bg:#13352a; --bad:#ff93a6; --bad-bg:#3c1a24;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--desk);color:var(--ink);font:17px/1.5 var(--body);padding-inline:16px;padding-block:20px 56px}
+.wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+button{font-family:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{text-wrap:balance}
+
+.top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{font:600 30px/1.1 var(--display);letter-spacing:-.01em}
+.brand mark,.ex mark{background:var(--hi);color:var(--hi-ink);border-radius:3px;padding:0 3px;font-weight:700}
+.tag{color:var(--ink-soft);font-size:15px}
+
+/* grade tabs */
+.tabs{display:flex;align-items:flex-end;gap:6px;border-bottom:2px solid var(--ink)}
+.tabs-label{font:600 13px var(--display);letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);padding:0 4px 11px 0}
+.tab{flex:1 1 0;min-width:0;max-width:66px;height:42px;border:2px solid var(--ink);border-bottom:0;border-radius:10px 10px 0 0;background:var(--card);font:600 20px var(--display);cursor:pointer;padding:0}
+.tab[aria-pressed="true"]{background:var(--hi);color:var(--hi-ink);height:52px}
+
+.grade-head{display:flex;flex-direction:column;gap:2px}
+.grade-head h2{font:600 26px var(--display)}
+.focus{color:var(--ink-soft)}
+
+.skills{list-style:none;margin:0;padding:0;background:var(--paper);border:1px solid var(--line);border-radius:6px;position:relative;overflow:hidden}
+.skills::before,.sheet::before{content:"";position:absolute;top:0;bottom:0;left:26px;width:2px;background:var(--margin);opacity:.65}
+.skill{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 20px;align-items:center;padding:18px 18px 18px 44px;border-bottom:1px solid var(--rule)}
+.skill:last-child{border-bottom:0}
+.skill h3{font:600 20px var(--display)}
+.skill .rule{color:var(--ink-soft);margin-top:3px;max-width:58ch}
+.ex{margin-top:8px;font-size:18px}
+.side{display:flex;align-items:center;gap:12px}
+.best{font-size:14px;color:var(--ink-soft);font-variant-numeric:tabular-nums;white-space:nowrap}
+.best.done{color:var(--ok);font-weight:700}
+@media (max-width:560px){
+  .skill{grid-template-columns:minmax(0,1fr)}
+  .side{justify-content:space-between}
+  :root{--sent:20px;--row:52px}
+}
+
+.btn{font:600 17px var(--display);border:2px solid var(--ink);background:var(--card);border-radius:10px;padding:9px 18px;cursor:pointer;min-height:44px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.link{background:none;border:0;padding:6px 0;font:600 15px var(--display);color:var(--accent);cursor:pointer}
+
+/* practice */
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.bar h2{font:600 22px var(--display)}
+.count{font-variant-numeric:tabular-nums;color:var(--ink-soft);font-size:15px}
+.pips{display:flex;gap:5px}
+.pip{flex:1 1 0;height:8px;border-radius:4px;background:var(--line)}
+.pip.ok{background:var(--ok)}.pip.bad{background:var(--bad)}.pip.now{background:var(--hi);outline:1.5px solid var(--ink)}
+details.rulebox{font-size:15px;color:var(--ink-soft)}
+details.rulebox summary{cursor:pointer;font:600 14px var(--display);color:var(--accent);width:fit-content}
+details.rulebox p{margin-top:4px;max-width:65ch}
+.prompt{font:600 21px/1.3 var(--display)}
+.note{color:var(--ink-soft);font-size:15px;margin-top:4px}
+.q{display:flex;flex-direction:column;gap:16px}
+
+.sheet{position:relative;background-color:var(--paper);border:1px solid var(--line);border-radius:6px;padding:0 12px 0 42px;display:flex;flex-wrap:wrap;column-gap:.3em;font-size:var(--sent);
+  background-image:linear-gradient(to bottom,transparent calc(var(--row) - 1px),var(--rule) calc(var(--row) - 1px));background-size:100% var(--row)}
+.sheet.plain{display:block;padding-block:0;line-height:var(--row)}
+.unit{display:inline-flex;align-items:center;height:var(--row);white-space:nowrap}
+.word{font:inherit;background:none;border:0;padding:0 2px;border-radius:4px}
+button.word{cursor:pointer;border-bottom:2px dotted var(--accent)}
+.word.on{background:var(--hi);color:var(--hi-ink)}
+.word.bad{background:var(--bad-bg);color:var(--bad);text-decoration:underline wavy}
+.pm{font:inherit;font-weight:700;border:0;background:none;padding:0 1px;min-width:.5em;text-align:center}
+button.pm{cursor:pointer;background:var(--hi);color:var(--hi-ink);border-radius:4px;min-width:20px;height:34px;margin-inline:1px}
+.pm.ok{color:var(--ok)}
+.pm.bad{color:var(--bad);background:var(--bad-bg);border-radius:4px;text-decoration:line-through}
+.slot{position:relative;width:26px;height:40px;border:0;background:none;padding:0;cursor:pointer;border-radius:6px}
+.slot::after{content:"";position:absolute;left:50%;bottom:7px;width:9px;height:9px;margin-left:-5px;border-radius:50%;border:2px dotted var(--ink-soft)}
+.armed .slot::after{border:2px solid var(--accent);background:var(--hi)}
+.slot[aria-pressed="true"]{background:var(--hi)}
+.slot[aria-pressed="true"]::after{border:2px solid var(--hi-ink);background:var(--hi-ink)}
+.miss{display:inline-flex;align-items:flex-end;width:16px;height:40px;color:var(--bad);padding-bottom:4px}
+.miss svg{width:14px;height:11px}
+
+.palette{display:flex;flex-wrap:wrap;gap:8px}
+.key{display:grid;justify-items:center;gap:1px;min-width:66px;padding:6px 8px 7px;border:2px solid var(--line);border-radius:10px;background:var(--card);cursor:pointer}
+.key b{font:700 28px/1.1 var(--body)}
+.key small{font-size:11px;color:var(--ink-soft);white-space:nowrap}
+.key[aria-pressed="true"]{background:var(--hi);border-color:var(--ink);color:var(--hi-ink)}
+.key[aria-pressed="true"] small{color:var(--hi-ink)}
+.hint{font-size:14px;color:var(--ink-soft)}
+
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{text-align:left;font:400 19px/1.35 var(--body);padding:12px 14px;border:2px solid var(--line);border-radius:10px;background:var(--card);cursor:pointer;min-width:0;overflow-wrap:anywhere}
+.opt[aria-pressed="true"]{border-color:var(--ink);background:var(--hi);color:var(--hi-ink)}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg);color:var(--ink)}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg);color:var(--ink)}
+.opt:disabled{cursor:default}
+.glyph{display:inline-block;min-width:1.2em;font-size:26px;line-height:1;text-align:center;margin-right:6px;vertical-align:-2px}
+
+.fb{border-left:5px solid var(--bad);background:var(--bad-bg);border-radius:4px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.fb.ok{border-color:var(--ok);background:var(--ok-bg)}
+.fb strong{font:600 18px var(--display);color:var(--bad)}
+.fb.ok strong{color:var(--ok)}
+.fix{font-size:19px;font-weight:700}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+
+.score{font:600 44px/1 var(--display);font-variant-numeric:tabular-nums}
+.missed{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.missed li{border-left:3px solid var(--rule);padding-left:12px}
+.missed .fix{font-size:18px}
+.missed p+p{color:var(--ink-soft);font-size:15px;margin-top:2px}
+.sub{font:600 14px var(--display);letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft)}
+@media (prefers-reduced-motion: no-preference){.btn,.opt,.key,.tab{transition:background-color .12s,border-color .12s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1 class="brand">Punctuation Activation<mark>.</mark></h1>
+    <p class="tag">Punctuation practice for grades 1 to 8</p>
+  </header>
+  <main id="app" class="wrap"></main>
+</div>
+
+<script>
+const NAMES={'.':'period',',':'comma','?':'question mark','!':'exclamation mark','"':'quotation marks',';':'semicolon',':':'colon','—':'dash','(':'open parenthesis',')':'close parenthesis','…':'ellipsis'};
+const MARKS='.,?!";:()—…~';
+const P=(s,x={})=>({t:'place',s,...x});               // add the missing marks
+const C=(s,x={})=>({t:'place',s,caps:true,marks:false,...x}); // fix capitals only
+const PC=(s,x={})=>({t:'place',s,caps:true,...x});    // fix capitals and marks
+const M=(q,o,why,s)=>({t:'mc',q,o,why,s});            // first option is the correct one
+const W='Which sentence is correct?';
+const END='Which mark goes at the end?';
+const GREET={note:'This is the greeting at the top of a letter.'};
+const CLOSE={note:'This is the closing at the bottom of a letter.'};
+
+const GRADES=[
+{g:1,focus:'End marks, capital letters, and first commas',pal:'.?!,',skills:[
+ {id:'1a',name:'End marks',pal:'.?!',rule:'A telling sentence ends with a period. An asking sentence ends with a question mark. A sentence with strong feeling ends with an exclamation mark.',ex:'Where is my hat? It is on the bed.',q:[
+  M(END,['?','.','!'],'It asks something, so it ends with a question mark.','Where is my hat'),
+  M(END,['.','?',','],'It tells something, so it ends with a period.','The cat sat on the mat'),
+  M(END,['!','?',','],'Hooray shows strong feeling, so it ends with an exclamation mark.','Hooray, we won the game'),
+  M(END,['?','.','!'],'It asks something, so it ends with a question mark.','What is your name'),
+  M(END,['.','?',','],'It tells something, so it ends with a period.','I have a red kite'),
+  M(END,['!','?',','],'Wow shows strong feeling, so it ends with an exclamation mark.','Wow, that is a huge cake'),
+  M(W,['Do you like apples?','Do you like apples.','Do you like, apples'],'It asks something, so it ends with a question mark.'),
+  M(W,['I like to read.','I like to read?','I like, to read'],'It tells something, so it ends with a period.'),
+  M('Which sentence is asking something?',['Is it cold outside?','It is cold outside.','Put on your coat.'],'An asking sentence ends with a question mark.'),
+  P('Can you see the moon?'),P('My dog likes to run.'),P('How old are you?'),P('The sun is hot today.'),P('Did you feed the fish?'),
+  P('We play hockey after school.'),P('Who is at the door?'),P('The bird sat in a tree.'),P('Do you want some milk?'),P('I can ride my bike.')]},
+ {id:'1b',name:'Capital letters',rule:'Start every sentence with a capital letter. Names of people and pets, and the word I, always get capitals too.',ex:'<mark>M</mark>y friend <mark>S</mark>am and <mark>I</mark> ride bikes.',q:[
+  C('My friend Sam has a red bike.'),C('Today I saw a frog.'),C('Mom and I went to the park.'),C('Can Lily come to play?'),C('We gave Max a bath.'),C('My cat Coco naps all day.'),
+  C('Dad and I made soup.'),C('Is Noah your brother?'),C('My dog Pepper likes snow.'),C('Yesterday I lost a tooth.'),C('Can Emma and I play outside?'),C('Our teacher read to Liam.'),
+  M(W,['The bus is late.','the bus is late.','the Bus is late.'],'Only the first word needs a capital here.'),
+  M(W,['Ben and I like pizza.','Ben and i like pizza.','ben and I like pizza.'],'Names and the word I always get capitals.'),
+  M(W,['My name is Ava.','my name is Ava.','My name is ava.'],'The first word and the name both need capitals.'),
+  M(W,['Can I sit with Zoe?','Can i sit with Zoe?','can I sit with zoe?'],'The first word, the word I, and the name all need capitals.')]},
+ {id:'1c',name:'Commas in dates and lists',rule:'Put a comma between the day and the year. Put commas between three or more things in a list, including before the word and.',ex:'We saw lions, bears, and seals on May 5, 2024.',q:[
+  P('I like apples, grapes, and plums.'),P('She was born on May 5, 2018.'),P('We saw lions, bears, and seals.'),P('School starts on September 8, 2026.'),P('Red, blue, and green are colours.'),P('Tom, Kim, and Jo ran home.'),
+  P('We need eggs, milk, and bread.'),P('My sister was born on March 9, 2021.'),P('I can hop, skip, and jump.'),P('The party is on June 14, 2026.'),P('Cats, dogs, and fish are pets.'),P('We moved here on July 1, 2023.'),
+  M('Which date is correct?',['July 1, 2025','July 1 2025','July, 1 2025'],'The comma goes between the day and the year.'),
+  M('Which date is correct?',['October 31, 2026','October, 31 2026','October 31 2026,'],'The comma goes between the day and the year.'),
+  M(W,['I have a pen, a book, and a bag.','I have a pen, a book and, a bag.','I have, a pen a book and a bag.'],'Commas go between the things in the list, never after and.'),
+  M(W,['We ate soup, bread, and fruit.','We ate, soup bread and fruit.','We ate soup bread, and, fruit.'],'Commas go between the things in the list.')]},
+ {id:'1d',name:'Put it together',rule:'Check three things: a capital at the start, capitals for names, days, months, and the word I, and the right mark at the end.',ex:'Can Sam and I go too?',q:[
+  PC('Can I have a snack?'),PC('Sam and I like to swim.'),PC('Where did Ben go?'),PC('I have a cat, a dog, and a fish.'),PC('Is Mia at school today?'),PC('Dad and I baked a cake.'),PC('My birthday is June 3, 2019.'),
+  PC('Did Leo find his hat?'),PC('Mom and I walk to school.'),PC('Can Ruby come with us?'),PC('We saw ducks, geese, and swans.'),PC('My brother was born on April 2, 2020.'),PC('Where is Finn today?'),PC('On Friday I go to dance.')]}
+]},
+{g:2,focus:'Apostrophes, special names, and letters',pal:'.?!,',skills:[
+ {id:'2a',name:'Contractions',rule:'A contraction squeezes two words into one. The apostrophe goes where letters were left out.',ex:"do not → don't    it is → it's",q:[
+  M('Which is the short way to write do not?',["don't",'dont',"do'nt"],'The apostrophe replaces the o in not.'),
+  M('Which is the short way to write it is?',["it's","its'","i'ts"],'The apostrophe replaces the i in is.'),
+  M('Which is the short way to write I am?',["I'm","Im'",'Iam'],'The apostrophe replaces the a in am.'),
+  M('Which is the short way to write cannot?',["can't","cant'","ca'nt"],'The apostrophe replaces the letters n and o.'),
+  M('Which is the short way to write we will?',["we'll","wel'l",'well'],'The apostrophe replaces the w and i in will.'),
+  M('Which is the short way to write they are?',["they're","theyr'e",'theyre'],'The apostrophe replaces the a in are.'),
+  M('Which is the short way to write she is?',["she's","shes'","sh'es"],'The apostrophe replaces the i in is.'),
+  M('Which is the short way to write you are?',["you're","your'e",'youre'],'The apostrophe replaces the a in are.'),
+  M('Which is the short way to write I will?',["I'll","Il'l","I'l"],'The apostrophe replaces the w and i in will.'),
+  M('Which is the short way to write was not?',["wasn't","was'nt",'wasnt'],'The apostrophe replaces the o in not.'),
+  M('Which is the short way to write let us?',["let's","lets'","le'ts"],'The apostrophe replaces the u in us.'),
+  M('Which is the short way to write he would?',["he'd","hed'","h'ed"],'The apostrophe replaces the letters w, o, u, and l.'),
+  M(W,["She isn't here.",'She isnt here.',"She is'nt here."],"Is not becomes isn't. The apostrophe replaces the o."),
+  M(W,["We aren't late.",'We arent late.',"We are'nt late."],"Are not becomes aren't. The apostrophe replaces the o."),
+  M("In didn't, the apostrophe takes the place of which letter?",['o','i','d'],"Did not becomes didn't. The o is left out."),
+  M("Which two words make won't?",['will not','would not','was not'],"Won't is the short way to write will not."),
+  M("Which two words make they've?",['they have','they are','they will'],'The apostrophe replaces the h and a in have.')]},
+ {id:'2b',name:'Apostrophes that show owning',rule:'Add an apostrophe and s to show that something belongs to someone. A plain plural (more than one) gets no apostrophe.',ex:"Sam's bike is next to the dog's bowl.",q:[
+  M('The bike belongs to Sam. It is ___ bike.',["Sam's",'Sams',"Sams'"]),
+  M('The tail of the dog is the ___ tail.',["dog's",'dogs',"dogs's"]),
+  M('The hat that belongs to the girl is the ___ hat.',["girl's",'girls',"girl'"]),
+  M('That is my ___ desk.',["teacher's",'teachers',"teachers's"]),
+  M('The nest of the bird is the ___ nest.',["bird's",'birds',"birds's"]),
+  M('The book belongs to Maya. It is ___ book.',["Maya's",'Mayas',"Mayas'"]),
+  M('I found my ___ mitten.',["brother's",'brothers',"brother'"]),
+  M('The whiskers of the cat are the ___ whiskers.',["cat's",'cats',"cats's"]),
+  M('The coach has a whistle. It is the ___ whistle.',["coach's",'coachs','coaches']),
+  M(W,["My mom's car is blue.",'My moms car is blue.',"My mom's car is blue's."]),
+  M(W,["The baby's toy fell.",'The babys toy fell.',"The baby toy's fell."]),
+  M('Which sentence does NOT need an apostrophe?',['The cats are asleep.','The cats bowl is empty.','That is Bens coat.'],'Cats here just means more than one cat. Nothing belongs to them.'),
+  M('Which sentence does NOT need an apostrophe?',['Three birds flew away.','The birds wing is hurt.','That is Dads hat.'],'Birds here just means more than one bird. Nothing belongs to them.'),
+  M(W,['I see two dogs.',"I see two dog's.","I see two dogs'."],'Two dogs is a plain plural, so there is no apostrophe.'),
+  M(W,['We have four chairs.',"We have four chair's.","We have four chairs'."],'Four chairs is a plain plural, so there is no apostrophe.')]},
+ {id:'2c',name:'Capitals for special names',rule:'Holidays, brand names, and places on the map start with capital letters. So do days of the week and months.',ex:'<mark>O</mark>n <mark>M</mark>onday we fly to <mark>H</mark>alifax for <mark>T</mark>hanksgiving.',q:[
+  C('We eat turkey on Thanksgiving.'),C('My cousin lives in Alberta.'),C('We swam in Lake Ontario.'),C('School is closed on Labour Day.'),C('Is Paris in France?'),C('On Monday we drive to Ottawa.'),C("Dad made pancakes on New Year's Day."),
+  C('We watch fireworks on Canada Day.'),C('My aunt lives in Nova Scotia.'),C('In February we skate on the Rideau Canal.'),C('Is Vancouver near the Pacific Ocean?'),C('We wear poppies on Remembrance Day.'),C('Every Saturday I play hockey in Winnipeg.'),
+  M(W,['I love Lego bricks.','I love lego bricks.','I Love Lego Bricks.'],'Lego is a brand name, so it gets a capital. Ordinary words do not.'),
+  M(W,['My birthday is in October.','My birthday is in october.','My Birthday is in October.'],'Months get capitals. Birthday is an ordinary word.'),
+  M(W,['We shop on Tuesday.','We shop on tuesday.','We Shop On Tuesday.'],'Days of the week get capitals. Ordinary words do not.')]},
+ {id:'2d',name:'Greetings and closings',rule:'In a letter, put a comma after the greeting and after the closing.',ex:'Dear Grandpa,   …   Your friend,',q:[
+  P('Dear Grandpa,',GREET),P('Dear Coach Kim,',GREET),P('Dear Mom and Dad,',GREET),P('Dear Aunt Priya,',GREET),
+  P('Your friend,',CLOSE),P('With love,',CLOSE),P('Sincerely,',CLOSE),P('Your cousin,',CLOSE),P('Yours truly,',CLOSE),
+  M('Which greeting is correct?',['Dear Aunt Rosa,','Dear, Aunt Rosa','Dear Aunt Rosa.']),
+  M('Which greeting is correct?',['Dear Nana,','Dear Nana.','Dear, Nana']),
+  M('Which closing is correct?',['Your friend,','Your friend.','Your, friend']),
+  M('Which closing is correct?',['Love,','Love.','Love?']),
+  M('In a letter, what goes right after the closing word Sincerely?',[',','.','?']),
+  M('What mark follows the greeting in a friendly letter?',[',','.','!']),
+  M('Where does the comma go in the greeting Dear Sam?',['After Sam','After Dear','No comma is needed'])]}
+]},
+{g:3,focus:'Addresses, dialogue, possessives, and titles',pal:'.?!,"',skills:[
+ {id:'3a',name:'Commas in addresses',pal:'.?!,',rule:'Put a comma between the street and the city, and between the city and the province or country.',ex:'Send it to 12 Oak Street, Guelph, Ontario.',q:[
+  P('My aunt lives in Calgary, Alberta.'),P('Send it to 12 Oak Street, Guelph, Ontario.'),P('We drove to Kelowna, British Columbia.'),P('The museum is at 400 Main Street, Moncton, New Brunswick.'),P('Is your school in Brandon, Manitoba?'),
+  P('My pen pal lives in Paris, France.'),P('We flew to Whitehorse, Yukon.'),P('The rink is at 9 King Street, Sudbury, Ontario.'),P('Have you been to Banff, Alberta?'),P('Grandma moved to Victoria, British Columbia.'),P('The shop is at 25 Water Street, Charlottetown, Prince Edward Island.'),
+  M('Which is correct?',['Halifax, Nova Scotia','Halifax Nova Scotia,','Halifax. Nova Scotia']),
+  M(W,['My grandparents live in Regina, Saskatchewan.','My grandparents live in Regina Saskatchewan.','My grandparents live, in Regina Saskatchewan.'],'A comma separates the city from the province.'),
+  M('Where does the comma go?',['After Saskatoon','After live','After in'],'A comma separates the city from the province.','We live in Saskatoon Saskatchewan.'),
+  M(W,['Mail it to 8 Elm Road, Truro, Nova Scotia.','Mail it to 8 Elm Road Truro, Nova Scotia.','Mail it to 8, Elm Road Truro Nova Scotia.'],'One comma follows the street and another follows the city.')]},
+ {id:'3b',name:'Quotation marks in dialogue',rule:"Put quotation marks around a speaker's exact words. A comma separates the words from the speaker tag, and the end mark stays inside the quotation marks.",ex:'Mom said, "Dinner is ready."',q:[
+  P('Mom said, "Dinner is ready."'),P('"I found my shoe," said Leo.'),P('Ava asked, "Can I come too?"'),P('"What time is it?" asked Nora.'),P('"This is my favourite book," said Grace.'),
+  P('Dad said, "The bus is here."'),P('"I love this song," said Maya.'),P('Ben asked, "Where is my hat?"'),P('"Can we go skating?" asked Tara.'),P('"The soup is too hot," said Owen.'),P('Grandpa said, "Let me tell you a story."'),
+  M(W,['"Where are you going?" asked Dad.','"Where are you going"? asked Dad.','"Where are you going," asked Dad?'],'The question mark belongs to the spoken words, so it stays inside the quotation marks.'),
+  M(W,['Jake said, "I am tired."','Jake said "I am tired."','Jake said, "I am tired".'],'A comma follows said, and the period stays inside the quotation marks.'),
+  M(W,['"I can help," said Finn.','"I can help", said Finn.','"I can help, said Finn."'],'The comma goes inside the closing quotation marks, and the tag stays outside.'),
+  M(W,['Lena asked, "Is it snowing?"','Lena asked, "Is it snowing"?','Lena asked "Is it snowing?"'],'A comma follows asked, and the question mark stays inside the quotation marks.'),
+  M('Which sentence needs quotation marks?',['Mia said I am hungry.','Mia said that she was hungry.','Mia was hungry.'],"I am hungry are Mia's exact words, so they need quotation marks.")]},
+ {id:'3c',name:'Possessives: one owner or many',rule:"For one owner, add 's. For a plural that ends in s, add only an apostrophe. For a plural that does not end in s, add 's.",ex:"one dog's bone, two dogs' bones, the children's toys",q:[
+  M('The toys belong to two dogs. They are the ___ toys.',["dogs'","dog's",'dogs'],'Dogs is plural and ends in s, so add only an apostrophe.'),
+  M('The room belongs to one boy. It is the ___ room.',["boy's","boys'",'boys'],'One owner takes an apostrophe and s.'),
+  M('The coats of the children are the ___ coats.',["children's","childrens'",'childrens'],'Children is plural but does not end in s, so add an apostrophe and s.'),
+  M('Three teachers share a lounge. It is the ___ lounge.',["teachers'","teacher's",'teachers']),
+  M('Both of my sisters have bikes. My ___ bikes are red.',["sisters'","sister's",'sisters']),
+  M('The den of the fox is the ___ den.',["fox's",'foxes',"foxs'"]),
+  M('The men have hats. They are the ___ hats.',["men's","mens'",'mens'],'Men is plural but does not end in s, so add an apostrophe and s.'),
+  M('The ___ are barking.',['dogs',"dog's","dogs'"],'Nothing is owned here. It is a plain plural.'),
+  M('Two girls share a room. It is the ___ room.',["girls'","girl's",'girls'],'Girls is plural and ends in s, so add only an apostrophe.'),
+  M('The tail of one horse is the ___ tail.',["horse's","horses'",'horses'],'One owner takes an apostrophe and s.'),
+  M('The women have a team. It is the ___ team.',["women's","womens'",'womens'],'Women is plural but does not end in s, so add an apostrophe and s.'),
+  M('All the players have lockers. They are the ___ lockers.',["players'","player's",'players']),
+  M('The nest belongs to the mice. It is the ___ nest.',["mice's","mices'",'mices'],'Mice is plural but does not end in s, so add an apostrophe and s.'),
+  M('My two cousins have a dog. It is my ___ dog.',["cousins'","cousin's",'cousins']),
+  M('The baby has a blanket. It is the ___ blanket.',["baby's","babies'",'babys'],'One owner takes an apostrophe and s.'),
+  M('The ___ are in the barn.',['horses',"horse's","horses'"],'Nothing is owned here. It is a plain plural.')]},
+ {id:'3d',name:'Capitals in titles',rule:'In a title, capitalize the first word, the last word, and every important word. Small words like a, the, and, of, on, and in stay lowercase unless they come first or last.',ex:'We read <mark>T</mark>he <mark>P</mark>aper <mark>B</mark>ag <mark>P</mark>rincess.',q:[
+  C('We read The Cat in the Hat.'),C("My favourite book is Charlotte's Web."),C('Have you seen Beauty and the Beast?'),C('She is reading The Tale of Peter Rabbit.'),C('I watched The Wizard of Oz.'),
+  C('We sang The Wheels on the Bus.'),C('Dad read me Anne of Green Gables.'),C('Have you read The Paper Bag Princess?'),C('My sister loves Alice in Wonderland.'),C('We watched The Sound of Music.'),C('I borrowed The Secret Garden.'),
+  M('Which title is correct?',['Where the Wild Things Are','Where the wild things are','Where The Wild Things Are'],'The in the middle stays lowercase. Are is the last word, so it gets a capital.'),
+  M('Which title is correct?',['The Lion and the Mouse','The Lion And The Mouse','the lion and the mouse'],'And and the stay lowercase in the middle of a title.'),
+  M('Which title is correct?',['Love You Forever','Love you forever','love You Forever'],'Every word here is important, so each one gets a capital.'),
+  M('Which word in a title usually stays lowercase?',['of','Dragon','Secret'],'Short joining words stay lowercase unless they are first or last.')]}
+]},
+{g:4,focus:'Compound sentences, direct speech, and quoting',pal:'.?!,"',skills:[
+ {id:'4a',name:'Commas in compound sentences',pal:'.?!,',rule:'When and, but, or, so, or yet joins two complete sentences, put a comma before it. If the second part has no subject of its own, leave the comma out.',ex:'I wanted to play outside, but it started to rain.',q:[
+  P('I wanted to play outside, but it started to rain.'),P('Maya plays the drums, and her brother plays the flute.'),P('The movie was long, so we got more popcorn.'),P('He studied all night, yet he still felt nervous.'),P('You can call me tonight, or you can text me tomorrow.'),
+  P('The wind was cold, but the sun was bright.'),P('We missed the bus, so we walked to school.'),P('Ella wrote the story, and Jack drew the pictures.'),P('I can lend you a pencil, or you can borrow a pen.'),P('The puppy barked, but nobody heard it.'),
+  P('Dad cooked dinner and washed the dishes.',{why:'Washed the dishes has no subject of its own, so this is one sentence and needs no comma.'}),
+  P('She knocked twice and waited by the door.',{why:'Waited by the door has no subject of its own, so this is one sentence and needs no comma.'}),
+  P('Leo raked the leaves and put them in bags.',{why:'Put them in bags has no subject of its own, so this is one sentence and needs no comma.'}),
+  M(W,['We can walk to the park, or we can ride our bikes.','We can walk to the park or, we can ride our bikes.','We can walk, to the park or we can ride our bikes.']),
+  M(W,['The lake froze, so we went skating.','The lake froze so, we went skating.','The lake, froze so we went skating.']),
+  M('Which sentence does NOT need a comma?',['Sam ran fast and won the race.','Sam ran fast and he won the race.','Sam was tired but he kept running.'],'Won the race has no subject of its own, so it is not a second sentence.'),
+  M('Which sentence needs a comma before and?',['Mia sang and her dad played guitar.','Mia sang and danced.','Mia and her dad sang.'],'Mia sang and her dad played guitar are two complete sentences.')]},
+ {id:'4b',name:'Direct speech',rule:"Quotation marks surround the exact words spoken. Commas set off the speaker tag, even when the tag interrupts the sentence. Reported speech (said that…) needs no quotation marks.",ex:'"I think," said Omar, "we are lost."',q:[
+  P('"I think," said Omar, "we are lost."'),P('The coach asked, "Who wants to go first?"'),P('"Is it far?" asked Nina.'),P('"My bike has a flat tire," Eli said.'),
+  P('"After lunch," said Dad, "we can go to the park."'),P('Nora whispered, "Is anyone there?"'),P('"That was close," said Sam.'),P('"Do you know," asked Ravi, "where the library is?"'),P('The driver said, "Please take a seat."'),
+  P('"Wait for me," called Priya. "I need my coat."',{why:'Priya says two separate sentences, so a period follows the tag and new quotation marks open.'}),
+  P('"I finished my book," said Lucy. "It was great."',{why:'Lucy says two separate sentences, so a period follows the tag and new quotation marks open.'}),
+  M(W,['"Please sit down," said the teacher.','"Please sit down" said the teacher.','"Please sit down", said the teacher.'],'The comma goes inside the closing quotation marks.'),
+  M(W,['"Look at the stars," said Mom.','"Look at the stars" said Mom.','"Look at the stars, said Mom."'],'The comma goes inside the closing quotation marks, and the tag stays outside.'),
+  M(W,['"If we hurry," said Jo, "we can catch the bus."','"If we hurry," said Jo, "We can catch the bus."','"If we hurry" said Jo "we can catch the bus."'],'The tag interrupts one sentence, so the second part starts with a lowercase letter and commas surround the tag.'),
+  M(W,['Dana said that she was cold.','Dana said that "she was cold."','Dana said, that she was cold.'],'This reports what Dana said without her exact words, so it needs no quotation marks.'),
+  M(W,['Kai said that he was hungry.','Kai said that, "he was hungry."','Kai said "that he was hungry."'],'This reports what Kai said without his exact words, so it needs no quotation marks.')]},
+ {id:'4c',name:'Quoting from a text',rule:"When you copy an author's exact words, put them in quotation marks and use a comma after the words that introduce them. A period at the end goes inside the closing quotation marks.",ex:'The sign says, "Keep off the grass."',q:[
+  P('The sign says, "Keep off the grass."'),
+  P('According to the article, "Bees can see colours."',{note:'The words Bees can see colours are copied exactly from the article.'}),
+  P('The poem begins, "The fog comes on little cat feet."'),
+  P('The author writes, "Owls hunt at night."'),
+  P('The label says, "Shake well before using."'),
+  P('The first line reads, "It was a dark and stormy night."'),
+  P('The rule says, "Walk on the pool deck."'),
+  P('In the letter, Grandma writes, "I miss you all."'),
+  P('The poster says, "Reading takes you places."'),
+  M(W,['In the story, Ana says, "I will try again."','In the story, Ana says, "I will try again".','In the story Ana says "I will try again."']),
+  M(W,['The article states, "Beavers build dams."','The article states, "Beavers build dams".','The article states "Beavers build dams."']),
+  M('Which sentence copies exact words from a text?',['The book says, "Wolves live in packs."','The book says that wolves live in packs.','I read a book about wolves.'],'Only exact words go inside quotation marks.'),
+  M('Where does the period go when a quoted sentence ends your sentence?',['Inside the closing quotation marks','Outside the closing quotation marks','Before the opening quotation marks']),
+  M('Why do you use quotation marks when you copy a sentence from a book?',["To show the words are exactly the author's",'To make the sentence look longer','Because every sentence needs them'])]},
+ {id:'4d',name:'Capitalization review',rule:'Capitalize the first word of a sentence, names of people and places, days, months, holidays, languages, and titles. Family words like Mom get a capital only when used as a name.',ex:'<mark>A</mark>unt <mark>R</mark>osa speaks <mark>F</mark>rench and <mark>S</mark>panish.',q:[
+  C('My family visited Niagara Falls in July.'),C('Aunt Rosa speaks French and Spanish.'),C('On Friday, Dr. Patel will visit Maple Grove Public School.'),C('Did you read Island of the Blue Dolphins?'),C('The Peace Tower is in Ottawa.'),
+  C('We speak English and French in Canada.'),C('Last August, Uncle Ted drove to the Rocky Mountains.'),C('Does Mr. Singh teach at Queen Elizabeth School?'),C('The St. Lawrence River flows past Montreal.'),C('On Victoria Day, we visited Grandma in Kingston.'),C('My cousin Amira was born in Egypt.'),
+  M(W,['We crossed the Pacific Ocean.','We crossed the Pacific ocean.','We crossed the pacific ocean.'],'Both words are part of the name.'),
+  M(W,['We visited Lake Louise.','We visited lake Louise.','We visited Lake louise.'],'Both words are part of the name.'),
+  M(W,['I asked Mom for help.','I asked my Mom for help.','My Mom drove us.'],'Mom gets a capital when it is used as a name. After my, it stays lowercase.'),
+  M(W,['My dad speaks Cree.','My Dad speaks Cree.','My dad speaks cree.'],'Languages get capitals. After my, dad stays lowercase.')]}
+]},
+{g:5,focus:'Introductory elements, direct address, series, and titles',pal:'.,?!',skills:[
+ {id:'5a',name:'Introductory words and phrases',rule:'Put a comma after a word, phrase, or clause that comes before the main part of the sentence.',ex:'After the game, we went out for pizza.',q:[
+  P('After the game, we went out for pizza.'),P('However, the store was already closed.'),P('When the bell rang, everyone rushed outside.'),P('In the morning, the fog covered the valley.'),P('Suddenly, the lights went out.'),P('If you finish early, check your work.'),
+  P('After school, we walked to the rink.'),P('First, wash your hands.'),P('Although it was late, nobody felt tired.'),P('During the storm, the power went out.'),P('Luckily, the bus was still waiting.'),P('While the cake baked, we washed the dishes.'),P('As soon as the snow stopped, we went outside.'),
+  M(W,['Before you leave, turn off the lights.','Before you leave turn, off the lights.','Before, you leave turn off the lights.']),
+  M(W,['Because it was raining, the game was cancelled.','Because it was raining the game, was cancelled.','Because, it was raining the game was cancelled.']),
+  M(W,['Once the paint dries, we can hang the picture.','Once the paint dries we can, hang the picture.','Once, the paint dries we can hang the picture.'])]},
+ {id:'5b',name:'Yes, no, names, and tag questions',rule:"Use a comma after yes or no at the start of a sentence, around the name of a person you are speaking to, and before a short question tacked on the end.",ex:"Yes, Carlos, it is cold today, isn't it?",q:[
+  P('Yes, I would love some soup.'),P('Carlos, can you open the window?'),P("It is cold today, isn't it?"),P('No, the library is not open on Sunday.'),P('Thank you, Jordan, for your help.'),P("You fed the cat, didn't you?"),
+  P('No, I have not seen your keys.'),P('Dad, where are my skates?'),P("You like maple syrup, don't you?"),P('Please pass the salt, Hannah.'),P('Yes, we can meet after lunch.'),P('Come here, Max, and sit down.'),P("That was a great game, wasn't it?"),
+  M(W,["Let's eat, Grandma!","Lets eat Grandma!","Let's, eat Grandma!"],'The comma shows you are talking to Grandma, not eating her.'),
+  M(W,['Is that your backpack, Lena?','Is that, your backpack Lena?','Is that your backpack Lena?']),
+  M(W,['Thanks for the ride, Mrs. Lee.','Thanks, for the ride Mrs. Lee.','Thanks for the ride Mrs. Lee.'])]},
+ {id:'5c',name:'Commas in a series',rule:'Use commas to separate three or more items in a series, whether the items are single words or whole phrases. Put a comma before the final and or or as well. Two items need no comma.',ex:'We packed sandwiches, filled the bottles, and loaded the car.',q:[
+  P('We packed sandwiches, filled the water bottles, and loaded the car.'),P('She plays soccer in the fall, hockey in the winter, and tennis in the spring.'),P('The puppy chewed my shoe, hid my sock, and ate my homework.'),P('The team colours are green, white, and gold.'),P('Mix the flour, crack two eggs, and stir the batter.'),
+  P('We visited the zoo, the museum, and the aquarium.'),P('Sweep the floor, wipe the table, and take out the garbage.'),P('You can have soup, salad, or a sandwich.'),P('Maple, birch, and pine trees grow here.'),P('He ran down the hall, out the door, and across the field.'),
+  P('I like peanut butter and jelly.',{why:'There are only two items, so no comma is needed.'}),
+  P('My sister and I share a room.',{why:'There are only two items, so no comma is needed.'}),
+  P('Bring a towel and a water bottle.',{why:'There are only two items, so no comma is needed.'}),
+  M(W,['I need eggs, milk, and butter.','I need, eggs, milk, and butter.','I need eggs, milk, and, butter.'],'Commas go between the items, never before the first item or after and.'),
+  M(W,['Ducks, geese, and loons swim on the lake.','Ducks geese, and loons, swim on the lake.','Ducks, geese, and loons, swim on the lake.'],'No comma follows the last item in the series.')]},
+ {id:'5d',name:'Titles of works',rule:'Titles of long works (books, movies, magazines, newspapers) go in italics or are underlined. Titles of short works (poems, songs, articles, short stories, chapters) go in quotation marks.',ex:'We read "The Road Not Taken" in <i>Poems for Every Day</i>.',q:[
+  M('How should you write the title of a book?',['Italics or underlining','Quotation marks','No special marking']),
+  M('How should you write the title of a movie?',['Italics or underlining','Quotation marks','Parentheses']),
+  M('How should you write the title of a poem?',['Quotation marks','Italics or underlining','All capital letters']),
+  M('A song title goes in…',['quotation marks','italics','parentheses']),
+  M('A magazine article title goes in…',['quotation marks','italics','capital letters only']),
+  M('Which of these titles should be in italics or underlined?',['A newspaper','A chapter in a book','A short story']),
+  M('Which of these titles goes in quotation marks?',['A short story','A novel','A magazine']),
+  M('When you write a book title by hand, you should…',['underline it','put it in quotation marks','write it in capital letters'],'Underlining by hand stands in for italics.'),
+  M(W,['We read the poem "The Road Not Taken."','We read the poem <i>The Road Not Taken</i>.','We read the poem The Road Not Taken.'],'A poem is a short work, so its title goes in quotation marks.'),
+  M(W,['My favourite movie is <i>Finding Nemo</i>.','My favourite movie is "Finding Nemo."','My favourite movie is finding nemo.'],'A movie is a long work, so its title goes in italics.'),
+  M(W,['The article "Life on Mars" appeared in <i>Science Kids</i> magazine.','The article <i>Life on Mars</i> appeared in "Science Kids" magazine.','The article Life on Mars appeared in Science Kids magazine.'],'The article is the short work. The magazine is the long one.'),
+  M(W,['We sang "O Canada" at the assembly.','We sang <i>O Canada</i> at the assembly.','We sang O Canada at the assembly.'],'A song is a short work, so its title goes in quotation marks.'),
+  M(W,['I just finished the novel <i>Hatchet</i>.','I just finished the novel "Hatchet."','I just finished the novel hatchet.'],'A novel is a long work, so its title goes in italics.'),
+  M(W,['"The Raven" is a poem by Edgar Allan Poe.','<i>The Raven</i> is a poem by Edgar Allan Poe.','The raven is a poem by Edgar Allan Poe.'],'A poem is a short work, so its title goes in quotation marks.'),
+  M(W,['My dad reads <i>The Globe and Mail</i> every morning.','My dad reads "The Globe and Mail" every morning.','My dad reads the globe and mail every morning.'],'A newspaper is a long work, so its title goes in italics.')]}
+]},
+{g:6,focus:'Setting off extra information with commas, parentheses, and dashes',pal:'.,?',skills:[
+ {id:'6a',name:'Commas around extra information',rule:'If a phrase adds extra information and the sentence still makes sense without it, put a comma before and after it.',ex:'My neighbour, a retired pilot, tells great stories.',q:[
+  P('My neighbour, a retired pilot, tells great stories.'),P('The Amazon, which flows through Brazil, is enormous.'),P('Saturn, the sixth planet from the sun, has bright rings.'),P('The bridge, built in 1932, is still in use.'),P('Our coach, however, was not worried.'),P("Maria's poem, the last one in the book, won a prize."),
+  P('Ottawa, the capital of Canada, sits on a river.'),P('My bike, which I got last year, needs new tires.'),P('Terry Fox, a Canadian hero, ran across six provinces.'),P('The loon, a diving bird, appears on the dollar coin.'),P('The test, in fact, was quite easy.'),P('Banff, a town in Alberta, attracts many hikers.'),P('The library, which opened in 1910, has a new roof.'),
+  M(W,['Mrs. Chen, our principal, spoke first.','Mrs. Chen our principal, spoke first.','Mrs. Chen, our principal spoke first.'],'The extra information needs a comma on both sides.'),
+  M(W,['Mr. Roy, my hockey coach, used to play goalie.','Mr. Roy my hockey coach, used to play goalie.','Mr. Roy, my hockey coach used to play goalie.'],'The extra information needs a comma on both sides.'),
+  M(W,['Students who finish early may read quietly.','Students, who finish early, may read quietly.','Students who finish early, may read quietly.'],'Who finish early tells which students, so it is essential and takes no commas.')]},
+ {id:'6b',name:'Parentheses',pal:'.,()',rule:'Parentheses (also called round brackets) hold a quiet side note. The sentence must still work if you lift the parentheses and everything inside them out.',ex:'Bring a snack (fruit or crackers) for the trip.',q:[
+  P('The blue whale (the largest animal on Earth) eats tiny krill.'),P('Bring a snack (fruit or crackers) for the field trip.'),P('My cousin (the one from Regina) is visiting next week.'),P('The recipe calls for two cups (about 250 grams) of flour.'),
+  P('The loonie (the one dollar coin) has a bird on it.'),P('Our class pet (a very sleepy hamster) lives by the window.'),P('The hike is five kilometres (about three miles) long.'),P('Mr. Tran (my piano teacher) plays in a band.'),P('Please bring your forms (signed by a parent) on Monday.'),P('The festival (now in its tenth year) starts on Friday.'),
+  M(W,['Our team won (finally) after three losses.','Our team won (finally after three losses.','Our team won finally) after three losses.'],'Parentheses always come in pairs.'),
+  M('Where does the period go?',["We left early (around six o'clock).","We left early (around six o'clock.)","We left early. (around six o'clock)"],'The period ends the whole sentence, so it goes after the closing parenthesis.'),
+  M(W,['The trip costs twenty dollars (lunch included).','The trip costs twenty dollars (lunch included.)','The trip costs twenty dollars lunch included).'],'The period ends the whole sentence, so it goes after the closing parenthesis.'),
+  M('Parentheses tell the reader that the words inside are…',['extra information that could be removed','the most important part of the sentence',"someone's exact words"]),
+  M('If you remove the parentheses and the words inside them, the sentence should…',['still make sense','become a question','need a new capital letter'])]},
+ {id:'6c',name:'Dashes',pal:'.,—',rule:'A pair of dashes sets off an interruption or extra information with more emphasis than commas or parentheses.',ex:"The winner — to everyone's surprise — was the youngest player.",q:[
+  P('My brother — the one who hates vegetables — ate all the broccoli.'),P("The winner — to everyone's surprise — was the youngest player."),P('Our dog — a very loud terrier — guards the house.'),P('The old car — rusty but reliable — started on the first try.'),
+  P('My sister — the one in Halifax — just had a baby.'),P('The storm — the worst in years — closed every school.'),P('Our goalie — only twelve years old — stopped every shot.'),P('The recipe — passed down from my grandmother — is a secret.'),P('Two provinces — Alberta and Saskatchewan — joined Canada in 1905.'),
+  P('Three things — a map, a compass, and water — are essential.',{why:'Dashes work well here because the extra information already contains commas.'}),
+  P('The cabin — small, dark, and cold — was not what we expected.',{why:'Dashes work well here because the extra information already contains commas.'}),
+  M(W,['The storm—the worst in years—knocked out the power.','The storm—the worst in years, knocked out the power.','The storm the worst in years—knocked out the power.'],'Open with a dash, close with a dash.'),
+  M(W,['My best friend—the funniest person I know—is moving away.','My best friend—the funniest person I know, is moving away.','My best friend, the funniest person I know—is moving away.'],'Open with a dash, close with a dash.'),
+  M('A pair of dashes does a similar job to…',['a pair of commas or parentheses','a period','quotation marks']),
+  M('When should you choose dashes over commas for extra information?',['When you want the information to stand out','When the information is a title','When the sentence is a question'])]},
+ {id:'6d',name:'Essential or extra?',rule:'Extra information gets commas on both sides. Information the sentence needs in order to identify who or what you mean gets no commas.',ex:'The book that I borrowed is overdue. My mother, who is a nurse, works nights.',q:[
+  M(W,['The book that I borrowed is overdue.','The book, that I borrowed, is overdue.','The book that I borrowed, is overdue.'],'That I borrowed tells which book, so it is essential.'),
+  M(W,['My mother, who is a nurse, works nights.','My mother who is a nurse, works nights.','My mother, who is a nurse works nights.'],'You have one mother, so who is a nurse is extra information.'),
+  M(W,['Mount Everest, which is in the Himalayas, is the tallest mountain.','Mount Everest which is in the Himalayas is, the tallest mountain.','Mount Everest, which is in the Himalayas is the tallest mountain.']),
+  M(W,['People who exercise regularly often sleep better.','People, who exercise regularly, often sleep better.','People who exercise regularly, often sleep better.'],'Who exercise regularly tells which people, so it is essential.'),
+  M(W,['Paris, the capital of France, is famous for its museums.','Paris the capital of France, is famous for its museums.','Paris, the capital of France is famous for its museums.']),
+  M(W,['The girl wearing the red jacket is my cousin.','The girl, wearing the red jacket, is my cousin.','The girl wearing the red jacket, is my cousin.'],'Wearing the red jacket tells which girl, so it is essential.'),
+  M(W,['The player who scores the most goals wins the trophy.','The player, who scores the most goals, wins the trophy.','The player who scores the most goals, wins the trophy.'],'Who scores the most goals tells which player, so it is essential.'),
+  M(W,['My dad, who grew up in Winnipeg, loves cold weather.','My dad who grew up in Winnipeg, loves cold weather.','My dad, who grew up in Winnipeg loves cold weather.'],'You have one dad, so who grew up in Winnipeg is extra information.'),
+  M(W,['The CN Tower, which opened in 1976, is in Toronto.','The CN Tower which opened in 1976, is in Toronto.','The CN Tower, which opened in 1976 is in Toronto.']),
+  M(W,['Dogs that bark all night annoy the neighbours.','Dogs, that bark all night, annoy the neighbours.','Dogs that bark all night, annoy the neighbours.'],'That bark all night tells which dogs, so it is essential.'),
+  M(W,['Lake Superior, the largest Great Lake, is very cold.','Lake Superior the largest Great Lake, is very cold.','Lake Superior, the largest Great Lake is very cold.']),
+  M(W,['The shoes I bought yesterday are too small.','The shoes, I bought yesterday, are too small.','The shoes I bought yesterday, are too small.'],'I bought yesterday tells which shoes, so it is essential.'),
+  M(W,['Anyone who wants to join should sign up today.','Anyone, who wants to join, should sign up today.','Anyone who wants to join, should sign up today.'],'Who wants to join tells which people, so it is essential.'),
+  M('Which test tells you that information is extra?',['The sentence still makes sense without it.','It comes at the end of the sentence.','It contains a verb.'])]}
+]},
+{g:7,focus:'Coordinate adjectives, semicolons, colons, and run-ons',pal:'.,;:',skills:[
+ {id:'7a',name:'Commas between adjectives',pal:'.,',rule:'Put a comma between two adjectives if you could swap them or put and between them. If you cannot, leave the comma out.',ex:'It was a long, tiring day. She wore a bright red scarf.',q:[
+  P('It was a long, tiring day.'),P('The cold, damp basement smelled of old paint.'),P('A loud, cheerful crowd filled the gym.'),P('The steep, rocky trail led to a waterfall.'),
+  P('We crossed a deep, icy river.'),P('He told a funny, clever joke.'),P('The tired, hungry hikers finally reached camp.'),P('A calm, steady voice came over the speaker.'),P('It was a dark, stormy night.'),
+  P('She wore a bright red scarf.',{why:'Bright describes the shade of red. You would not say red bright scarf, so there is no comma.'}),
+  P('Grandpa drives an old green truck.',{why:'You would not say green old truck or old and green truck, so there is no comma.'}),
+  P('She bought two wool sweaters.',{why:'You would not say wool two sweaters, so there is no comma.'}),
+  P('They live in a little white house.',{why:'You would not say white little house, so there is no comma.'}),
+  M(W,['He is a kind, patient teacher.','He is a kind patient, teacher.','He is a, kind patient teacher.']),
+  M(W,['A friendly, helpful clerk found my size.','A friendly helpful, clerk found my size.','A, friendly helpful clerk found my size.']),
+  M(W,['We adopted three small kittens.','We adopted three, small kittens.','We adopted, three small kittens.'],'You cannot say small three kittens, so there is no comma.'),
+  M('Which pair of adjectives needs a comma?',['a rude impatient customer','several large boxes','a bright blue sky'],'You can say rude and impatient or swap the two words, so they need a comma.')]},
+ {id:'7b',name:'Semicolons',rule:'A semicolon joins two complete, closely related sentences. Use one before words like however and therefore when they link two sentences, and between list items that already contain commas.',ex:'The rain stopped; the sun came out.',q:[
+  P('The rain stopped; the sun came out.'),P("I have a test tomorrow; I can't go to the movie."),P('Some students walked to school; others took the bus.'),P('The team practised every day; therefore, they improved quickly.'),
+  P('The bell rang; the hallway filled with students.'),P('I love winter; my brother prefers summer.'),P('We were out of milk; however, the store was closed.'),P('The trail was icy; nobody wanted to turn back.'),P('Lena plays goal; her twin plays defence.'),P('The forecast called for snow; instead, it rained all day.'),
+  P('We visited Halifax, Nova Scotia; Regina, Saskatchewan; and Victoria, British Columbia.',{why:'Each item already has a comma, so semicolons separate the items.'}),
+  M(W,['She loves hiking; however, she hates camping.','She loves hiking, however; she hates camping.','She loves hiking; however she, hates camping.'],'The semicolon goes before however and a comma goes after it.'),
+  M(W,['It was late; we went home.','Because it was late; we went home.','It was; late we went home.'],'Both sides of a semicolon must be complete sentences.'),
+  M(W,['Call me tomorrow; I will have an answer then.','Call me tomorrow I; will have an answer then.','When you call me tomorrow; I will have an answer.'],'Both sides of a semicolon must be complete sentences.'),
+  M('A semicolon joins two…',['complete sentences that are closely related','items in a short list','words in a title']),
+  M('Which word often follows a semicolon and takes a comma after it?',['however','and','because'])]},
+ {id:'7c',name:'Colons',rule:'A colon follows a complete sentence and introduces a list, an explanation, or an example. Do not put a colon right after a verb.',ex:'Bring these supplies: a pencil, a ruler, and a notebook.',q:[
+  P('Bring these supplies: a pencil, a ruler, and a notebook.'),P('She had one goal: to finish the race.'),P('The recipe needs three ingredients: flour, sugar, and butter.'),P('Remember the rule: look both ways before you cross.'),
+  P('The kit contains three tools: a hammer, a wrench, and a screwdriver.'),P('He knew the answer: nobody was coming.'),P('We need the following: tape, scissors, and glue.'),P('Canada has three territories: Yukon, Nunavut, and the Northwest Territories.'),P('There was only one problem: the door was locked.'),P('My goal is simple: to read twenty books this year.'),
+  M(W,['I play two sports: soccer and tennis.','My favourite sports are: soccer and tennis.','I play: two sports soccer and tennis.'],'The words before a colon must form a complete sentence.'),
+  M(W,['She packed three things: a hat, a scarf, and mitts.','She packed: a hat, a scarf, and mitts.','She packed three things; a hat: a scarf and mitts.'],'The words before a colon must form a complete sentence.'),
+  M(W,['The winners are Ali, Jo, and Sam.','The winners are: Ali, Jo, and Sam.','The winners: are Ali, Jo, and Sam.'],'No colon goes right after a verb like are.'),
+  M(W,['The bus leaves at 7:45 in the morning.','The bus leaves at 7;45 in the morning.','The bus leaves at 7,45 in the morning.'],'A colon separates hours from minutes.'),
+  M('What must come before a colon that introduces a list?',['A complete sentence','A verb like are or include','A comma'])]},
+ {id:'7d',name:'Comma splices and run-ons',rule:'A comma alone cannot join two complete sentences. Fix it with a period, a semicolon, or a comma plus a joining word.',ex:'The door was locked; we knocked.',q:[
+  M('Which fixes this comma splice? I was tired, I went to bed.',['I was tired, so I went to bed.','I was tired I went to bed.','I was tired, I, went to bed.']),
+  M('Which fixes this comma splice? The lake was frozen, we went skating.',['The lake was frozen, so we went skating.','The lake was frozen we went skating.','The lake, was frozen, we went skating.']),
+  M(W,['The door was locked; we knocked.','The door was locked, we knocked.','The door was locked we knocked.']),
+  M(W,['It started to snow; we headed home.','It started to snow, we headed home.','It started to snow we headed home.']),
+  M(W,["My phone died. I couldn't call you.","My phone died, I couldn't call you.","My phone died I couldn't call you."]),
+  M(W,['I like tea. My sister prefers cocoa.','I like tea, my sister prefers cocoa.','I like tea my sister prefers cocoa.']),
+  M(W,["It's getting late, and we should leave.","It's getting late, we should leave.","It's getting late we should leave."]),
+  M(W,['He forgot his lunch, but his friend shared.','He forgot his lunch, his friend shared.','He forgot his lunch his friend shared.']),
+  M('Which sentence is a comma splice?',['The test was hard, I think I passed.','The test was hard, but I think I passed.','The test was hard; I think I passed.']),
+  M('Which sentence is a comma splice?',['We were early, the doors were still locked.','We were early, and the doors were still locked.','Because we were early, the doors were still locked.']),
+  M('Which sentence is a run-on?',['The bus was late we missed the bell.','The bus was late, so we missed the bell.','The bus was late. We missed the bell.'],'A run-on pushes two sentences together with nothing between them.'),
+  M(W,['Although the test was hard, I think I passed.','Although the test was hard; I think I passed.','Although the test was hard. I think I passed.'],'Although the test was hard is not a complete sentence, so a comma attaches it.'),
+  M(W,['When the bus was late, we missed the bell.','When the bus was late; we missed the bell.','When the bus was late. We missed the bell.'],'When the bus was late is not a complete sentence, so a comma attaches it.'),
+  M('Which is NOT a way to fix a comma splice?',['Remove the comma and add nothing','Replace the comma with a period','Add a joining word after the comma'],'Removing the comma only turns the splice into a run-on.')]}
+]},
+{g:8,focus:'Dashes, ellipses, and choosing the right mark',pal:'.,?',skills:[
+ {id:'8a',name:'Dashes for a break',pal:'.,—',rule:'A dash marks a sudden break in thought or sets up a dramatic reveal at the end of a sentence.',ex:'She had only one fear — spiders.',q:[
+  P('I opened the box and found — nothing.'),P('She had only one fear — spiders.'),P('The answer — if there is one — is hidden in the last chapter.'),P('He packed everything he needed — a tent, a stove, and a map.'),
+  P('There was only one thing left to do — run.'),P('The door creaked open and there stood — my grandmother.'),P('Everything we owned — clothes, books, and photos — fit in one car.'),P('He promised to be on time — and he was.'),P('The final score — you will not believe this — was ten to nothing.'),
+  M(W,['I was about to answer—wait, what was the question?','I was about to—answer wait, what was the question?','I was about to answer wait what—was the question?'],'The dash sits exactly where the thought breaks off.'),
+  M(W,['After all that work, the answer was simple—start over.','After all—that work, the answer was simple start over.','After all that work—the answer, was simple start over.'],'The dash sets up the reveal at the end.'),
+  M('Which sentence uses a dash to show a sudden change of thought?',['I think we should—never mind.','I think—we should leave now.','I—think we should leave.'],'The dash sits exactly where the thought breaks off.'),
+  M('A dash near the end of a sentence usually signals…',['a sudden break or a dramatic reveal','the end of a quotation','a list of exactly three items']),
+  M('How many dashes set off an interruption in the middle of a sentence?',['Two','One','Three'],'One dash opens the interruption and another closes it.')]},
+ {id:'8b',name:'Ellipses',pal:'.,?"…',rule:'An ellipsis shows that words were left out of a quotation. In dialogue it shows a pause or a thought trailing off. A dash, not an ellipsis, shows a sudden interruption.',ex:'"Well … I\'m not sure," Dev admitted.',q:[
+  P('"I thought … never mind," she said.'),P('"Well … I\'m not sure," Dev admitted.'),
+  P('"I wonder … no, that can\'t be right," said Amy.'),P('"Um … can you repeat the question?" asked Noor.'),P('"It was … different," he said.'),
+  M('What does an ellipsis show inside a quotation from a text?',['Words have been left out','The quote is very important','The speaker is shouting']),
+  M('How many dots make up an ellipsis?',['Three','Two','Five']),
+  M('The original reads: "The committee, after a long and heated debate, approved the plan." Which version shortens it correctly?',['"The committee … approved the plan."','"The committee, approved the plan."','"The committee approved … the plan."'],'The ellipsis sits where the words were removed.'),
+  M('The original reads: "Our town, founded by fur traders in 1820, sits on the river." Which version shortens it correctly?',['"Our town … sits on the river."','"Our town, sits on the river."','"Our … town sits on the river."'],'The ellipsis sits where the words were removed.'),
+  M('In dialogue, an ellipsis usually shows…',['a pause or a thought trailing off','a sudden interruption','excitement']),
+  M('Which mark best shows a speaker being suddenly cut off?',['—','…',';']),
+  M('A character is interrupted in the middle of a sentence by a loud crash. Which is punctuated best?',['"I was just about to—"','"I was just about to …"','"I was just about to;"'],'A dash shows a sudden interruption.'),
+  M('A character drifts off to sleep while talking. Which is punctuated best?',['"I\'m not tired … just resting …"','"I\'m not tired—just resting—"','"I\'m not tired; just resting;"'],'An ellipsis shows a voice trailing off.'),
+  M('When you cut words from a quotation with an ellipsis, you must not…',['change the meaning of the original',"keep the author's name",'use quotation marks']),
+  M('When is it wrong to shorten a quotation with an ellipsis?',['When the cut makes the author seem to say something different','When the quotation is from a book','When the quotation is longer than one line'])]},
+ {id:'8c',name:'Commas for pauses and contrast',rule:'Use a comma to mark a pause after a mild interjection, to set off a contrast beginning with not, and around a phrase that interrupts the sentence.',ex:'It was my idea, not his.',q:[
+  P('It was my idea, not his.'),P('Well, that was unexpected.'),P("Oh, I didn't see you there."),P("You are coming to the meeting, aren't you?"),P('The final score, believe it or not, was a tie.'),
+  P('She wanted the red one, not the blue one.'),P('Oh, that reminds me of a story.'),P('The answer, of course, was in the book all along.'),P('Well, I suppose we could try again.'),P('It is the effort that counts, not the score.'),P('The movie, to be honest, was a little boring.'),P("He is your cousin, isn't he?"),
+  M(W,['The more you practise, the easier it gets.','The more you practise the easier, it gets.','The more, you practise the easier it gets.']),
+  M(W,['The sooner we leave, the sooner we arrive.','The sooner we leave the sooner, we arrive.','The sooner, we leave the sooner we arrive.']),
+  M(W,['I asked for tea, not coffee.','I asked, for tea not coffee.','I asked for tea not, coffee.'])]},
+ {id:'8d',name:'Semicolon, colon, or comma?',rule:'A semicolon joins two complete sentences. A colon points forward to a list or an explanation. A comma alone cannot join two sentences.',ex:'I have one piece of advice: start early.',q:[
+  M('Which mark fits the blank?',[':',';',','],'The second part explains what the advice is.','I have one piece of advice ___ start early.'),
+  M('Which mark fits the blank?',[';',':',','],'Two complete, related sentences are joined by a semicolon.','The power went out ___ we lit candles.'),
+  M('Which mark fits the blank?',[';',',',':'],'A semicolon goes before however when it links two sentences.','The museum was closed ___ however, the gardens were open.'),
+  M('Which mark fits the blank?',[':',';','.'],'A colon introduces the list after a complete sentence.','She brought three things ___ a flashlight, a rope, and a whistle.'),
+  M('Which mark fits the blank?',[':',',','?'],'The second part reveals what he said.','He finally said what we were all thinking ___ it was time to go home.'),
+  M('Which mark fits both blanks?',[';',',',':'],'The items already contain commas, so semicolons separate them.','We toured Lima, Peru ___ Quito, Ecuador ___ and Bogotá, Colombia.'),
+  M('Which mark fits the blank?',[';',',',':'],'A semicolon goes before as a result when it links two sentences.','Maya studied for weeks ___ as a result, she aced the exam.'),
+  M('Which mark fits the blank?',[':',';','?'],'The second part names the one thing.','There is one thing I cannot stand ___ being late.'),
+  M('Which mark fits the blank?',[';',':',','],'Two complete, related sentences are joined by a semicolon.','The road was closed ___ we took the ferry instead.'),
+  M('Which mark fits the blank?',[';',',',':'],'A semicolon goes before however when it links two sentences.','I wanted to stay ___ however, my ride was leaving.'),
+  M('Which mark fits the blank?',[':',';','.'],'A colon introduces the list after a complete sentence.','The store sells three kinds of syrup ___ maple, birch, and blueberry.'),
+  M('Which mark fits the blank?',[',',';',':'],'Before the game started is not a complete sentence, so a comma attaches it.','Before the game started ___ the crowd sang the anthem.'),
+  M('Which mark fits both blanks?',[';',',',':'],'The items already contain commas, so semicolons separate them.','The speakers came from Iqaluit, Nunavut ___ Gander, Newfoundland ___ and Brandon, Manitoba.'),
+  M('Which mark fits the blank?',[':',',','?'],'The second part states the warning.','She gave me a warning ___ never feed the geese.'),
+  M('Which mark fits the blank?',[',',';',':'],'A comma goes before a joining word like but when it links two sentences.','The game was close ___ but we won in overtime.')]},
+ {id:'8e',name:"Editor's challenge",pal:'.,?";:()—',rule:'Read the whole sentence first. Find the main sentence, then decide what is extra, what is a list, and where one complete thought ends.',ex:'"Wait," said Theo, "isn\'t that your phone?"',q:[
+  P('"Wait," said Theo, "isn\'t that your phone?"'),
+  P('"If it rains," said Maya, "we will meet inside."'),
+  P('"Are you sure," asked Ben, "that this is the right bus?"'),
+  P('After the storm passed, we found the damage: a broken fence, a fallen tree, and a flooded garage.',{note:'Introduce the list with a colon.'}),
+  P('Our tour stopped in three cities: Quebec City, Montreal, and Ottawa.',{note:'Introduce the list with a colon.'}),
+  P('My aunt, who lives in Lima, Peru, sent me a long, funny letter.',{note:'Use commas only.'}),
+  P('The bus was late; nevertheless, we arrived on time.',{note:'Join the two sentences with a semicolon.'}),
+  P('When the game ended, the crowd cheered; the players, however, were too tired to celebrate.',{note:'Join the two sentences with a semicolon.'}),
+  P('Yes, the last chapter (the shortest one) is my favourite.',{note:'Put the side note in parentheses.'}),
+  P('Well, the museum (my favourite place) was closed.',{note:'Put the side note in parentheses.'}),
+  P('On July 20, 1969, humans first walked on the moon.',{why:'In a sentence, a comma follows the year as well as the day.'}),
+  P('On September 1, 1905, Alberta became a province.',{why:'In a sentence, a comma follows the year as well as the day.'}),
+  P('The prize — a week in Rome — went to Dana, not me.',{note:'Set off the prize description with dashes.'}),
+  P('The winners — Priya, Leo, and Sam — each received a medal.',{note:'Set off the names with dashes.'})]}
+]}
+];
+GRADES.forEach(G=>G.skills.forEach(S=>S.q.forEach(it=>{it.skill=S;it.pal=it.pal||S.pal||G.pal})));
+
+function parse(s){
+  const words=[],gaps=[''];
+  for(const tok of s.split(/\s+/)){
+    let a=0,b=tok.length;
+    while(a<b&&MARKS.includes(tok[a]))a++;
+    while(b>a&&MARKS.includes(tok[b-1]))b--;
+    if(a===b){gaps[gaps.length-1]+=tok;continue}
+    gaps[gaps.length-1]+=tok.slice(0,a);
+    words.push(tok.slice(a,b));
+    gaps.push(tok.slice(b));
+  }
+  return {words,gaps};
+}
+function pretty(s){let q=0;return s.replace(/"/g,()=>(q++%2?'”':'“')).replace(/'/g,'’').replace(/ — /g,'—').replace(/~/g,'')}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const isL=c=>/[A-Za-z]/.test(c||'');
+const isUp=w=>isL(w[0])&&w[0]===w[0].toUpperCase();
+const setCase=(w,u)=>(u?w[0].toUpperCase():w[0].toLowerCase())+w.slice(1);
+const optHTML=o=>NAMES[o]?`<b class="glyph">${o}</b>${NAMES[o]}`:pretty(o);
+const exHTML=e=>e.includes('<mark>')?e:pretty(e).replace(/[.,?!“”;:()—…’]/g,m=>`<mark>${m}</mark>`);
+// A period and an exclamation mark are both acceptable at the very end of a sentence.
+// A tilde in the expected marks is an optional serial comma.
+function gapMatch(u,e,last){
+  if(e.includes('~'))return u===e.replace('~','')||u===e.replace('~',',');
+  const soft=s=>last?s.replace(/!/g,'.'):s;
+  return soft(u)===soft(e);
+}
+function placeOK(c){
+  const exp=c.p.gaps,last=exp.length-1;
+  const gapsOK=c.gaps.every((g,i)=>gapMatch(g,exp[i],i===last));
+  const capsOK=c.p.words.every((w,i)=>!isL(w[0])||c.caps[i]===isUp(w));
+  return gapsOK&&capsOK;
+}
+
+if(typeof document!=='undefined'){
+const app=document.getElementById('app');
+let store={grade:1,best:{}};
+try{Object.assign(store,JSON.parse(localStorage.getItem('mmw1')||'{}'))}catch(e){}
+if(!GRADES[store.grade-1])store.grade=1;
+const save=()=>{try{localStorage.setItem('mmw1',JSON.stringify(store))}catch(e){}};
+let R=null,cur=null;
+
+function bestHTML(id){
+  const b=store.best[id];
+  if(!b)return '<span class="best">Not tried yet</span>';
+  return `<span class="best${b.s===b.n?' done':''}">Best ${b.s} of ${b.n}</span>`;
+}
+function home(focusSel){
+  R=cur=null;
+  const G=GRADES[store.grade-1];
+  app.innerHTML=`
+  <nav class="tabs" aria-label="Choose a grade"><span class="tabs-label">Grade</span>${GRADES.map(x=>`<button class="tab" data-grade="${x.g}" aria-pressed="${x.g===G.g}" aria-label="Grade ${x.g}">${x.g}</button>`).join('')}</nav>
+  <div class="grade-head"><h2>Grade ${G.g}</h2><p class="focus">${G.focus}</p></div>
+  <ul class="skills">${G.skills.map(S=>`
+    <li class="skill"><div><h3>${S.name}</h3><p class="rule">${S.rule}</p><p class="ex">${exHTML(S.ex)}</p></div>
+    <div class="side">${bestHTML(S.id)}<button class="btn primary" data-skill="${S.id}" aria-label="Practise ${S.name}">Practise</button></div></li>`).join('')}
+    <li class="skill"><div><h3>Mixed review</h3><p class="rule">Ten questions drawn from every Grade ${G.g} skill.</p></div>
+    <div class="side">${bestHTML('mix'+G.g)}<button class="btn" data-skill="mix">Start review</button></div></li>
+  </ul>`;
+  if(focusSel){const el=app.querySelector(focusSel);if(el)el.focus()}
+}
+
+function start(id,items,retry){
+  const G=GRADES[store.grade-1];
+  const S=G.skills.find(s=>s.id===id);
+  const pool=items||(S?S.q:G.skills.flatMap(s=>s.q));
+  R={id:S?S.id:'mix'+G.g,name:S?S.name:'Mixed review',g:G.g,items:items?shuffle(pool):shuffle(pool).slice(0,S?8:10),i:0,res:[],retry:!!retry,skillId:id};
+  showQ();
+}
+function showQ(){
+  const it=R.items[R.i];
+  cur={it,done:false,ok:false};
+  if(it.t==='mc'){cur.order=shuffle(it.o.map((_,i)=>i));cur.pick=null}
+  else{
+    cur.p=parse(it.s);
+    cur.locked=it.marks===false;
+    cur.gaps=cur.locked?cur.p.gaps.map(g=>g.replace(/~/g,'')):cur.p.gaps.map(()=>'');
+    cur.caps=cur.p.words.map(w=>it.caps?false:isUp(w));
+    cur.arm=null;cur.sel=null;
+  }
+  draw('.prompt');
+}
+
+function sheetHTML(){
+  const {p,gaps,caps,it,done,locked}=cur;
+  let q=0;
+  const showStart=/["(]/.test(it.pal)&&!locked;
+  const split=gaps.map((g,gi)=>{
+    const cl=[],op=[];let opening=false;
+    [...g].forEach((ch,ci)=>{
+      let glyph=ch,isOp=ch==='(';
+      if(ch==='"'){isOp=q%2===0;glyph=isOp?'“':'”';q++}
+      if(isOp)opening=true;
+      const html=locked?`<span class="pm">${glyph}</span>`
+        :done?`<span class="pm ${placeGapOK(gi)?'ok':'bad'}">${glyph}</span>`
+        :`<button class="pm" data-rm="${gi}:${ci}" aria-label="Remove ${NAMES[ch]}">${glyph}</button>`;
+      (opening?op:cl).push(html);
+    });
+    return {cl:cl.join(''),op:op.join('')};
+  });
+  const slot=gi=>{
+    if(locked)return '';
+    if(done)return placeGapOK(gi)?'':'<span class="miss" aria-label="Something is wrong here"><svg viewBox="0 0 14 11" aria-hidden="true"><path d="M1.5 10 7 2l5.5 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
+    const where=gi===0?'before the first word':`after ${p.words[gi-1]}`;
+    return `<button class="slot" data-gap="${gi}" aria-pressed="${cur.sel===gi}" aria-label="Spot ${where}"></button>`;
+  };
+  const word=i=>{
+    const w=p.words[i],canFix=it.caps&&isL(w[0]);
+    const txt=canFix?setCase(w,caps[i]):w;
+    if(canFix&&!done)return `<button class="word${caps[i]?' on':''}" data-word="${i}" aria-label="${txt}, tap to change the first letter">${txt}</button>`;
+    const bad=done&&canFix&&caps[i]!==isUp(w);
+    return `<span class="word${bad?' bad':canFix&&caps[i]?' on':''}">${txt}</span>`;
+  };
+  let h=showStart||split[0].cl?`<span class="unit">${split[0].cl}${showStart?slot(0):''}</span>`:'';
+  p.words.forEach((_,i)=>{h+=`<span class="unit">${split[i].op}${word(i)}${split[i+1].cl}${slot(i+1)}</span>`});
+  return `<div class="sheet${cur.arm?' armed':''}">${h}</div>`;
+}
+function placeGapOK(gi){
+  const exp=cur.p.gaps;
+  return gapMatch(cur.gaps[gi],exp[gi],gi===exp.length-1);
+}
+
+function draw(focusSel){
+  const it=cur.it,S=it.skill,n=R.items.length,last=R.i===n-1;
+  let body='';
+  if(it.t==='mc'){
+    body=`<p class="prompt" tabindex="-1">${pretty(it.q)}</p>
+    ${it.s?`<div class="sheet plain">${pretty(it.s)}</div>`:''}
+    <div class="opts">${cur.order.map(oi=>{
+      const cls=cur.done?(oi===0?'ok':oi===cur.pick?'bad':''):'';
+      return `<button class="opt ${cls}" data-pick="${oi}" aria-pressed="${cur.pick===oi}" ${cur.done?'disabled':''}>${optHTML(it.o[oi])}</button>`}).join('')}</div>`;
+  }else{
+    const ask=cur.locked?'Tap each word that needs a capital letter.':it.caps?'Tap the words that need capitals, then add the missing marks.':'Add the missing punctuation.';
+    body=`<div><p class="prompt" tabindex="-1">${ask}</p>${it.note?`<p class="note">${it.note}</p>`:''}</div>
+    ${sheetHTML()}
+    ${cur.locked||cur.done?'':`<div class="palette" role="group" aria-label="Punctuation marks">${[...it.pal].map((ch,k)=>`<button class="key" data-mark="${k}" aria-pressed="${cur.arm===ch}"><b>${ch==='"'?'“ ”':ch}</b><small>${NAMES[ch]}</small></button>`).join('')}</div>
+    <p class="hint">Pick a mark, then tap a dot in the sentence. Tap a mark you placed to take it off.</p>`}`;
+  }
+  const why=it.why||S.rule;
+  const fb=cur.done?`<div class="fb ${cur.ok?'ok':''}" role="status"><strong>${cur.ok?'Correct':'Not quite'}</strong>${it.t==='place'&&!cur.ok?`<p class="fix">${pretty(it.s)}</p>`:''}<p>${why}</p></div>`:'';
+  const ready=it.t==='place'||cur.pick!==null;
+  app.innerHTML=`
+  <div class="bar"><button class="link" data-act="home">← Grade ${R.g} skills</button><span class="count">Question ${R.i+1} of ${n}</span></div>
+  <div class="pips" aria-hidden="true">${R.items.map((_,i)=>`<span class="pip ${i<R.res.length?(R.res[i]?'ok':'bad'):i===R.i?'now':''}"></span>`).join('')}</div>
+  <div class="bar"><h2>${R.name}</h2></div>
+  <details class="rulebox"><summary>Show the rule</summary><p>${S.rule}</p></details>
+  <div class="q">${body}${fb}
+    <div class="actions">${cur.done?`<button class="btn primary" data-act="next">${last?'See results':'Next question'}</button>`:`<button class="btn primary" data-act="check" ${ready?'':'disabled'}>Check</button>`}</div>
+  </div>`;
+  if(focusSel){const el=app.querySelector(focusSel);if(el)el.focus({preventScroll:focusSel!=='.prompt'})}
+}
+
+function check(){
+  const it=cur.it;
+  cur.ok=it.t==='mc'?cur.pick===0:placeOK(cur);
+  cur.done=true;cur.arm=cur.sel=null;
+  R.res.push(cur.ok);
+  draw('[data-act="next"]');
+}
+function results(){
+  const n=R.items.length,s=R.res.filter(Boolean).length;
+  if(!R.retry){const b=store.best[R.id];if(!b||s/n>b.s/b.n){store.best[R.id]={s,n};save()}}
+  const missed=R.items.filter((_,i)=>!R.res[i]);
+  const msg=s===n?'A perfect round. Every mark is in its place.':s/n>=.75?'Strong work. One more round should lock it in.':'Read the rule again, then try another round.';
+  const done=R;
+  app.innerHTML=`
+  <div class="bar"><button class="link" data-act="home">← Grade ${R.g} skills</button></div>
+  <div><p class="sub">${R.name}</p><p class="score">${s} of ${n}</p><p>${msg}</p></div>
+  <div class="actions">
+    ${missed.length?'<button class="btn primary" data-act="retry">Retry the ones I missed</button>':''}
+    <button class="btn${missed.length?'':' primary'}" data-act="again">New round</button>
+    <button class="btn" data-act="home">Back to skills</button>
+  </div>
+  ${missed.length?`<p class="sub">Corrections</p><ul class="missed">${missed.map(it=>`<li><p class="fix">${it.t==='place'?pretty(it.s):(it.s?pretty(it.s)+' → ':'')+optHTML(it.o[0])}</p><p>${it.t==='mc'&&!it.s?pretty(it.q)+' ':''}${it.why||it.skill.rule}</p></li>`).join('')}</ul>`:''}`;
+  R=done;R.missed=missed;
+  const f=app.querySelector('.actions .btn');if(f)f.focus();
+}
+
+app.addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b||!app.contains(b))return;
+  const d=b.dataset;
+  if(d.grade){store.grade=+d.grade;save();home(`[data-grade="${d.grade}"]`)}
+  else if(d.skill)start(d.skill);
+  else if(d.act==='home')home();
+  else if(d.act==='check')check();
+  else if(d.act==='next'){R.i++;R.i<R.items.length?showQ():results()}
+  else if(d.act==='again')start(R.skillId);
+  else if(d.act==='retry')start(R.skillId,R.missed,true);
+  else if(!cur||cur.done)return;
+  else if(d.pick!==undefined){cur.pick=+d.pick;draw(`[data-pick="${d.pick}"]`)}
+  else if(d.mark!==undefined){
+    const ch=[...cur.it.pal][+d.mark];
+    if(cur.sel!==null){if(cur.gaps[cur.sel].length<3)cur.gaps[cur.sel]+=ch;const g=cur.sel;cur.sel=null;draw(`[data-gap="${g}"]`)}
+    else{cur.arm=cur.arm===ch?null:ch;draw(`[data-mark="${d.mark}"]`)}
+  }
+  else if(d.gap!==undefined){
+    const gi=+d.gap;
+    if(cur.arm){if(cur.gaps[gi].length<3)cur.gaps[gi]+=cur.arm}
+    else cur.sel=cur.sel===gi?null:gi;
+    draw(`[data-gap="${gi}"]`);
+  }
+  else if(d.rm){const [gi,ci]=d.rm.split(':').map(Number);cur.gaps[gi]=cur.gaps[gi].slice(0,ci)+cur.gaps[gi].slice(ci+1);draw(`[data-gap="${gi}"]`)}
+  else if(d.word!==undefined){cur.caps[+d.word]=!cur.caps[+d.word];draw(`[data-word="${d.word}"]`)}
+});
+home();
+}
+</script>
+</body>
+</html>
