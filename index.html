@@ -193,16 +193,16 @@ const GRADES=[
   M(W,['Ben and I like pizza.','Ben and i like pizza.','ben and I like pizza.'],'Names and the word I always get capitals.'),
   M(W,['My name is Ava.','my name is Ava.','My name is ava.'],'The first word and the name both need capitals.'),
   M(W,['Can I sit with Zoe?','Can i sit with Zoe?','can I sit with zoe?'],'The first word, the word I, and the name all need capitals.')]},
- {id:'1c',name:'Commas in dates and lists',rule:'Put a comma between the day and the year. Put commas between three or more things in a list, including before the word and.',ex:'We saw lions, bears, and seals on May 5, 2024.',q:[
-  P('I like apples, grapes, and plums.'),P('She was born on May 5, 2018.'),P('We saw lions, bears, and seals.'),P('School starts on September 8, 2026.'),P('Red, blue, and green are colours.'),P('Tom, Kim, and Jo ran home.'),
-  P('We need eggs, milk, and bread.'),P('My sister was born on March 9, 2021.'),P('I can hop, skip, and jump.'),P('The party is on June 14, 2026.'),P('Cats, dogs, and fish are pets.'),P('We moved here on July 1, 2023.'),
+ {id:'1c',name:'Commas in dates and lists',rule:'Put a comma between the day and the year. Put commas between three or more things in a list. The comma before the word and is optional, so both ways are marked correct.',ex:'We saw lions, bears, and seals on May 5, 2024.',q:[
+  P('I like apples, grapes~ and plums.'),P('She was born on May 5, 2018.'),P('We saw lions, bears~ and seals.'),P('School starts on September 8, 2026.'),P('Red, blue~ and green are colours.'),P('Tom, Kim~ and Jo ran home.'),
+  P('We need eggs, milk~ and bread.'),P('My sister was born on March 9, 2021.'),P('I can hop, skip~ and jump.'),P('The party is on June 14, 2026.'),P('Cats, dogs~ and fish are pets.'),P('We moved here on July 1, 2023.'),
   M('Which date is correct?',['July 1, 2025','July 1 2025','July, 1 2025'],'The comma goes between the day and the year.'),
   M('Which date is correct?',['October 31, 2026','October, 31 2026','October 31 2026,'],'The comma goes between the day and the year.'),
   M(W,['I have a pen, a book, and a bag.','I have a pen, a book and, a bag.','I have, a pen a book and a bag.'],'Commas go between the things in the list, never after and.'),
   M(W,['We ate soup, bread, and fruit.','We ate, soup bread and fruit.','We ate soup bread, and, fruit.'],'Commas go between the things in the list.')]},
  {id:'1d',name:'Put it together',rule:'Check three things: a capital at the start, capitals for names, days, months, and the word I, and the right mark at the end.',ex:'Can Sam and I go too?',q:[
-  PC('Can I have a snack?'),PC('Sam and I like to swim.'),PC('Where did Ben go?'),PC('I have a cat, a dog, and a fish.'),PC('Is Mia at school today?'),PC('Dad and I baked a cake.'),PC('My birthday is June 3, 2019.'),
-  PC('Did Leo find his hat?'),PC('Mom and I walk to school.'),PC('Can Ruby come with us?'),PC('We saw ducks, geese, and swans.'),PC('My brother was born on April 2, 2020.'),PC('Where is Finn today?'),PC('On Friday I go to dance.')]}
+  PC('Can I have a snack?'),PC('Sam and I like to swim.'),PC('Where did Ben go?'),PC('I have a cat, a dog~ and a fish.'),PC('Is Mia at school today?'),PC('Dad and I baked a cake.'),PC('My birthday is June 3, 2019.'),
+  PC('Did Leo find his hat?'),PC('Mom and I walk to school.'),PC('Can Ruby come with us?'),PC('We saw ducks, geese~ and swans.'),PC('My brother was born on April 2, 2020.'),PC('Where is Finn today?'),PC('On Friday I go to dance.')]}
 ]},
 {g:2,focus:'Apostrophes, special names, and letters',pal:'.?!,',skills:[
  {id:'2a',name:'Contractions',rule:'A contraction squeezes two words into one. The apostrophe goes where letters were left out.',ex:"do not → don't    it is → it's",q:[
@@ -354,9 +354,9 @@ const GRADES=[
   M(W,["Let's eat, Grandma!","Lets eat Grandma!","Let's, eat Grandma!"],'The comma shows you are talking to Grandma, not eating her.'),
   M(W,['Is that your backpack, Lena?','Is that, your backpack Lena?','Is that your backpack Lena?']),
   M(W,['Thanks for the ride, Mrs. Lee.','Thanks, for the ride Mrs. Lee.','Thanks for the ride Mrs. Lee.'])]},
- {id:'5c',name:'Commas in a series',rule:'Use commas to separate three or more items in a series, whether the items are single words or whole phrases. Put a comma before the final and or or as well. Two items need no comma.',ex:'We packed sandwiches, filled the bottles, and loaded the car.',q:[
-  P('We packed sandwiches, filled the water bottles, and loaded the car.'),P('She plays soccer in the fall, hockey in the winter, and tennis in the spring.'),P('The puppy chewed my shoe, hid my sock, and ate my homework.'),P('The team colours are green, white, and gold.'),P('Mix the flour, crack two eggs, and stir the batter.'),
-  P('We visited the zoo, the museum, and the aquarium.'),P('Sweep the floor, wipe the table, and take out the garbage.'),P('You can have soup, salad, or a sandwich.'),P('Maple, birch, and pine trees grow here.'),P('He ran down the hall, out the door, and across the field.'),
+ {id:'5c',name:'Commas in a series',rule:'Use commas to separate three or more items in a series, whether the items are single words or whole phrases. The comma before the final and or or is optional, so both ways are marked correct. Two items need no comma.',ex:'We packed sandwiches, filled the bottles, and loaded the car.',q:[
+  P('We packed sandwiches, filled the water bottles~ and loaded the car.'),P('She plays soccer in the fall, hockey in the winter~ and tennis in the spring.'),P('The puppy chewed my shoe, hid my sock~ and ate my homework.'),P('The team colours are green, white~ and gold.'),P('Mix the flour, crack two eggs~ and stir the batter.'),
+  P('We visited the zoo, the museum~ and the aquarium.'),P('Sweep the floor, wipe the table~ and take out the garbage.'),P('You can have soup, salad~ or a sandwich.'),P('Maple, birch~ and pine trees grow here.'),P('He ran down the hall, out the door~ and across the field.'),
   P('I like peanut butter and jelly.',{why:'There are only two items, so no comma is needed.'}),
   P('My sister and I share a room.',{why:'There are only two items, so no comma is needed.'}),
   P('Bring a towel and a water bottle.',{why:'There are only two items, so no comma is needed.'}),
@@ -397,8 +397,8 @@ const GRADES=[
  {id:'6c',name:'Dashes',pal:'.,—',rule:'A pair of dashes sets off an interruption or extra information with more emphasis than commas or parentheses.',ex:"The winner — to everyone's surprise — was the youngest player.",q:[
   P('My brother — the one who hates vegetables — ate all the broccoli.'),P("The winner — to everyone's surprise — was the youngest player."),P('Our dog — a very loud terrier — guards the house.'),P('The old car — rusty but reliable — started on the first try.'),
   P('My sister — the one in Halifax — just had a baby.'),P('The storm — the worst in years — closed every school.'),P('Our goalie — only twelve years old — stopped every shot.'),P('The recipe — passed down from my grandmother — is a secret.'),P('Two provinces — Alberta and Saskatchewan — joined Canada in 1905.'),
-  P('Three things — a map, a compass, and water — are essential.',{why:'Dashes work well here because the extra information already contains commas.'}),
-  P('The cabin — small, dark, and cold — was not what we expected.',{why:'Dashes work well here because the extra information already contains commas.'}),
+  P('Three things — a map, a compass~ and water — are essential.',{why:'Dashes work well here because the extra information already contains commas.'}),
+  P('The cabin — small, dark~ and cold — was not what we expected.',{why:'Dashes work well here because the extra information already contains commas.'}),
   M(W,['The storm—the worst in years—knocked out the power.','The storm—the worst in years, knocked out the power.','The storm the worst in years—knocked out the power.'],'Open with a dash, close with a dash.'),
   M(W,['My best friend—the funniest person I know—is moving away.','My best friend—the funniest person I know, is moving away.','My best friend, the funniest person I know—is moving away.'],'Open with a dash, close with a dash.'),
   M('A pair of dashes does a similar job to…',['a pair of commas or parentheses','a period','quotation marks']),
@@ -441,8 +441,8 @@ const GRADES=[
   M('A semicolon joins two…',['complete sentences that are closely related','items in a short list','words in a title']),
   M('Which word often follows a semicolon and takes a comma after it?',['however','and','because'])]},
  {id:'7c',name:'Colons',rule:'A colon follows a complete sentence and introduces a list, an explanation, or an example. Do not put a colon right after a verb.',ex:'Bring these supplies: a pencil, a ruler, and a notebook.',q:[
-  P('Bring these supplies: a pencil, a ruler, and a notebook.'),P('She had one goal: to finish the race.'),P('The recipe needs three ingredients: flour, sugar, and butter.'),P('Remember the rule: look both ways before you cross.'),
-  P('The kit contains three tools: a hammer, a wrench, and a screwdriver.'),P('He knew the answer: nobody was coming.'),P('We need the following: tape, scissors, and glue.'),P('Canada has three territories: Yukon, Nunavut, and the Northwest Territories.'),P('There was only one problem: the door was locked.'),P('My goal is simple: to read twenty books this year.'),
+  P('Bring these supplies: a pencil, a ruler~ and a notebook.'),P('She had one goal: to finish the race.'),P('The recipe needs three ingredients: flour, sugar~ and butter.'),P('Remember the rule: look both ways before you cross.'),
+  P('The kit contains three tools: a hammer, a wrench~ and a screwdriver.'),P('He knew the answer: nobody was coming.'),P('We need the following: tape, scissors~ and glue.'),P('Canada has three territories: Yukon, Nunavut~ and the Northwest Territories.'),P('There was only one problem: the door was locked.'),P('My goal is simple: to read twenty books this year.'),
   M(W,['I play two sports: soccer and tennis.','My favourite sports are: soccer and tennis.','I play: two sports soccer and tennis.'],'The words before a colon must form a complete sentence.'),
   M(W,['She packed three things: a hat, a scarf, and mitts.','She packed: a hat, a scarf, and mitts.','She packed three things; a hat: a scarf and mitts.'],'The words before a colon must form a complete sentence.'),
   M(W,['The winners are Ali, Jo, and Sam.','The winners are: Ali, Jo, and Sam.','The winners: are Ali, Jo, and Sam.'],'No colon goes right after a verb like are.'),
@@ -466,8 +466,8 @@ const GRADES=[
 ]},
 {g:8,focus:'Dashes, ellipses, and choosing the right mark',pal:'.,?',skills:[
  {id:'8a',name:'Dashes for a break',pal:'.,—',rule:'A dash marks a sudden break in thought or sets up a dramatic reveal at the end of a sentence.',ex:'She had only one fear — spiders.',q:[
-  P('I opened the box and found — nothing.'),P('She had only one fear — spiders.'),P('The answer — if there is one — is hidden in the last chapter.'),P('He packed everything he needed — a tent, a stove, and a map.'),
-  P('There was only one thing left to do — run.'),P('The door creaked open and there stood — my grandmother.'),P('Everything we owned — clothes, books, and photos — fit in one car.'),P('He promised to be on time — and he was.'),P('The final score — you will not believe this — was ten to nothing.'),
+  P('I opened the box and found — nothing.'),P('She had only one fear — spiders.'),P('The answer — if there is one — is hidden in the last chapter.'),P('He packed everything he needed — a tent, a stove~ and a map.'),
+  P('There was only one thing left to do — run.'),P('The door creaked open and there stood — my grandmother.'),P('Everything we owned — clothes, books~ and photos — fit in one car.'),P('He promised to be on time — and he was.'),P('The final score — you will not believe this — was ten to nothing.'),
   M(W,['I was about to answer—wait, what was the question?','I was about to—answer wait, what was the question?','I was about to answer wait what—was the question?'],'The dash sits exactly where the thought breaks off.'),
   M(W,['After all that work, the answer was simple—start over.','After all—that work, the answer was simple start over.','After all that work—the answer, was simple start over.'],'The dash sets up the reveal at the end.'),
   M('Which sentence uses a dash to show a sudden change of thought?',['I think we should—never mind.','I think—we should leave now.','I—think we should leave.'],'The dash sits exactly where the thought breaks off.'),
@@ -512,8 +512,8 @@ const GRADES=[
   P('"Wait," said Theo, "isn\'t that your phone?"'),
   P('"If it rains," said Maya, "we will meet inside."'),
   P('"Are you sure," asked Ben, "that this is the right bus?"'),
-  P('After the storm passed, we found the damage: a broken fence, a fallen tree, and a flooded garage.',{note:'Introduce the list with a colon.'}),
-  P('Our tour stopped in three cities: Quebec City, Montreal, and Ottawa.',{note:'Introduce the list with a colon.'}),
+  P('After the storm passed, we found the damage: a broken fence, a fallen tree~ and a flooded garage.',{note:'Introduce the list with a colon.'}),
+  P('Our tour stopped in three cities: Quebec City, Montreal~ and Ottawa.',{note:'Introduce the list with a colon.'}),
   P('My aunt, who lives in Lima, Peru, sent me a long, funny letter.',{note:'Use commas only.'}),
   P('The bus was late; nevertheless, we arrived on time.',{note:'Join the two sentences with a semicolon.'}),
   P('When the game ended, the crowd cheered; the players, however, were too tired to celebrate.',{note:'Join the two sentences with a semicolon.'}),
@@ -522,7 +522,7 @@ const GRADES=[
   P('On July 20, 1969, humans first walked on the moon.',{why:'In a sentence, a comma follows the year as well as the day.'}),
   P('On September 1, 1905, Alberta became a province.',{why:'In a sentence, a comma follows the year as well as the day.'}),
   P('The prize — a week in Rome — went to Dana, not me.',{note:'Set off the prize description with dashes.'}),
-  P('The winners — Priya, Leo, and Sam — each received a medal.',{note:'Set off the names with dashes.'})]}
+  P('The winners — Priya, Leo~ and Sam — each received a medal.',{note:'Set off the names with dashes.'})]}
 ]}
 ];
 GRADES.forEach(G=>G.skills.forEach(S=>S.q.forEach(it=>{it.skill=S;it.pal=it.pal||S.pal||G.pal})));
@@ -540,7 +540,7 @@ function parse(s){
   }
   return {words,gaps};
 }
-function pretty(s){let q=0;return s.replace(/"/g,()=>(q++%2?'”':'“')).replace(/'/g,'’').replace(/ — /g,'—').replace(/~/g,'')}
+function pretty(s){let q=0;return s.replace(/"/g,()=>(q++%2?'”':'“')).replace(/'/g,'’').replace(/ — /g,'—').replace(/~/g,',')}
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 const isL=c=>/[A-Za-z]/.test(c||'');
 const isUp=w=>isL(w[0])&&w[0]===w[0].toUpperCase();
@@ -619,7 +619,7 @@ function sheetHTML(){
     [...g].forEach((ch,ci)=>{
       let glyph=ch,isOp=ch==='(';
       if(ch==='"'){isOp=q%2===0;glyph=isOp?'“':'”';q++}
-      if(isOp)opening=true;
+      if(isOp&&gi<gaps.length-1)opening=true; // no word follows the last spot, so nothing there is an opener
       const html=locked?`<span class="pm">${glyph}</span>`
         :done?`<span class="pm ${placeGapOK(gi)?'ok':'bad'}">${glyph}</span>`
         :`<button class="pm" data-rm="${gi}:${ci}" aria-label="Remove ${NAMES[ch]}">${glyph}</button>`;
